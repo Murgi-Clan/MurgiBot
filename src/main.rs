@@ -4,36 +4,37 @@ use commands::{howl::*};
 use serenity::{
     async_trait,
     model::{channel::Message, gateway::Ready},
-    prelude::*,
     utils::MessageBuilder,
 };
 use serenity::client::{Client, Context, EventHandler};
 use serenity::framework::standard::{
     StandardFramework,
-    CommandResult,
     macros::{
-        command,
         group
     }
 };
 
 use std::env;
+use regex::Regex;
 
 struct Handler;
+
+// Defining a howl counter, so, when it hits 4 counts, it howls.
+static mut HOWL_COUNTER: i32 = 0;
 
 #[async_trait]
 impl EventHandler for Handler {
     async fn message(&self, context: Context, msg: Message) {
+        let channel = match msg.channel_id.to_channel(&context).await {
+            Ok(channel) => channel,
+            Err(why) => {
+                println!("Error getting channel: {:?}", why);
+
+                return;
+            },
+        };
+
         if msg.content == "m>howl" {
-            let channel = match msg.channel_id.to_channel(&context).await {
-                Ok(channel) => channel,
-                Err(why) => {
-                    println!("Error getting channel: {:?}", why);
-
-                    return;
-                },
-            };
-
             // The message builder allows for creating a message by
             // mentioning users dynamically, pushing "safe" versions of
             // content (such as bolding normalized content), displaying
@@ -48,6 +49,24 @@ impl EventHandler for Handler {
 
             if let Err(why) = msg.channel_id.say(&context.http, &response).await {
                 println!("Error sending message: {:?}", why);
+            }
+        }
+
+        unsafe {
+            let howl_checker = Regex::new(r"^MURGI CLAN AW[O]*$").unwrap();
+            if howl_checker.is_match(&msg.content) == true {
+                HOWL_COUNTER += 1;
+                if HOWL_COUNTER == 4 {
+                    let response = MessageBuilder::new()
+                        .push("MURGI CLAN AWOOOOOOOOOOOOOOOOOO")
+                        .build();
+
+                    if let Err(why) = msg.channel_id.say(&context.http, &response).await {
+                        println!("Error sending message: {:?}", why);
+                    }
+
+                    HOWL_COUNTER = 0;
+                }
             }
         }
     }
