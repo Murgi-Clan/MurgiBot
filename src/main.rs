@@ -13,7 +13,7 @@ use serenity::framework::standard::{
 use std::env;
 
 #[group]
-#[commands(ping)]
+#[commands(howl)]
 struct General;
 
 struct Handler;
@@ -24,7 +24,7 @@ impl EventHandler for Handler {}
 #[tokio::main]
 async fn main() {
     let framework = StandardFramework::new()
-        .configure(|c| c.prefix("~")) // set the bot's prefix to "~"
+        .configure(|c| c.prefix("m>")) // set the bot's prefix to "m>"
         .group(&GENERAL_GROUP);
 
     // Login with a bot token from the environment
@@ -42,9 +42,8 @@ async fn main() {
 }
 
 #[command]
-async fn ping(ctx: &Context, msg: &Message) -> CommandResult {
-    msg.reply(ctx, "Pong!").await?;
+async fn howl(ctx: &Context, msg: &Message) -> CommandResult {
+    msg.reply(ctx, "MURGI CLAN AWOOOOOOOOOOOO").await?;
 
     Ok(())
 }
-
