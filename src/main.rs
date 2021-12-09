@@ -1,21 +1,23 @@
 mod commands;
 
 use commands::{howl::*};
+
 use serenity::{
     async_trait,
     model::{channel::Message, gateway::Ready},
     utils::MessageBuilder,
-};
-use serenity::client::{Client, Context, EventHandler};
-use serenity::framework::standard::{
-    StandardFramework,
-    macros::{
-        group
+    client::{Client, Context, EventHandler},
+    framework::standard::{
+        StandardFramework,
+        macros::{
+            group
+        }
     }
 };
 
 use std::env;
 use regex::Regex;
+use tracing::{error, info};
 
 struct Handler;
 
@@ -82,12 +84,19 @@ struct General;
 
 #[tokio::main]
 async fn main() {
+    // Loading the environment variables
+    dotenv::dotenv().expect("Failed to load the .env file");
+
+    // Initializing the logger to use environment variables
+    // This is a bit intense, so, proceed with caution.
+    // tracing_subscriber::fmt::init();
+
     let framework = StandardFramework::new()
         .configure(|c| c.prefix("m>")) // set the bot's prefix to "m>"
         .group(&GENERAL_GROUP);
 
     // Login with a bot token from the environment
-    let token = env::var("DISCORD_TOKEN").expect("token");
+    let token = env::var("DISCORD_TOKEN").expect("Expected a token in the environment");
     let mut client = Client::builder(token)
         .event_handler(Handler)
         .framework(framework)
