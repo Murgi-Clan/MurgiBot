@@ -1,6 +1,6 @@
 mod commands;
 
-use commands::{howl::*};
+use commands::{howl::*, torrent::*};
 
 use serenity::{
     async_trait,
@@ -17,7 +17,6 @@ use serenity::{
 
 use std::env;
 use regex::Regex;
-use tracing::{error, info};
 
 struct Handler;
 
@@ -79,7 +78,7 @@ impl EventHandler for Handler {
 }
 
 #[group]
-#[commands(howl)]
+#[commands(howl, torrent)]
 struct General;
 
 #[tokio::main]
