@@ -102,8 +102,6 @@ struct General;
 #[tokio::main]
 async fn main() {
     // Loading the environment variables
-    dotenv::dotenv().expect("Failed to load the .env file");
-
     // Initializing the logger to use environment variables
     // This is a bit intense, so, proceed with caution.
     // tracing_subscriber::fmt::init();

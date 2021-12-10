@@ -24,10 +24,9 @@ RUN rm ./target/release/deps/murgi_bot*
 RUN cargo build --release
 
 # Final base for running the application
-FROM debian:buster-slim
+FROM rust:1.49-slim-buster
 
 # Copy the build artifact from the build stage
 COPY --from=build /murgi/target/release/murgi_bot .
 
-CMD ["murgi_bot"]
-
+CMD ["./murgi_bot"]

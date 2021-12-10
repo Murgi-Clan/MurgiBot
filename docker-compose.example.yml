@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  murgi_bot:
+    container_name: murgi
+    image: datadi/murgi_bot:latest
+    environment:
+      DISCORD_TOKEN: {DISCORD_TOKEN}
+      JACKETT_RSS_FEED: http://{ip_addr:port}/api/v2.0/indexers/thepiratebay/results/torznab/api?apikey={API_KEY}&t=search&cat=&q=
+      RUST_LOG: DEBUG
+    restart: unless-stopped
