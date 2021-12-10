@@ -1,5 +1,5 @@
 ## What is this?
-The Murgi Bot is a Discord Bot Service that listens to messages in a guild/server, and when called using it's specified prefixes, or receives an alert that requires it to respond, it does exactly that.
+The Murgi Bot is a Discord Bot Service that listens to messages in a guild/server, and when called using it's specified prefixes, or receives an alert that requires it to respond, it does exactly that. \
 It was, and is made to be a simple bot that was created to entertain my friend group, and a fun little experiment on working with the Rust Language, and Discord API.
 
 There's a bunch of cool features that comes with the Murgi Bot, and here's a list of these features,
@@ -11,7 +11,7 @@ There's a bunch of cool features that comes with the Murgi Bot, and here's a lis
 - [ ] Stream videos from YouTube.
 
 ## Installation
-In order to set up the Murgi Bot, you will be required to install Rust, and set up a Rust Development environment, which is present in detail in the [[Rust Book][https://doc.rust-lang.org/stable/book/ch01-01-installation.html]].
+In order to set up the Murgi Bot, you will be required to install Rust, and set up a Rust Development environment, which is present in detail in the [Rust Book](https://doc.rust-lang.org/stable/book/ch01-01-installation.html).
 
 The bot also utilizes the Serenity Library in order to interact with the Discord API running in the backend, however, all of the development set up will be done by a simple `cargo build` or a `cargo run`, so, there's not much to worry about there.
 
