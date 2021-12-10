@@ -64,7 +64,7 @@ async fn torrent(ctx: &Context, msg: &Message) -> CommandResult {
 
     // Error Handling for the developer
     if let Err(why) = msg {
-        println!("Error sending message: {:?}", why);
+        println!("The chicken faced an error: {:?}", why);
     }
 
     Ok(())
