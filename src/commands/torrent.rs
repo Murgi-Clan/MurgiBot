@@ -29,13 +29,13 @@ use serenity::{
 
 use rss::{Channel, Item};
 
+/// This function retrieves the message sent by the user, cleans it
+/// with respect to the number of characters in the command, creates a query,
+/// and then proceeds to retrieve the torrent data from the RSS Feed, and displays
+/// it in the form of an embed message in Discord.
+/// Retrieving and cleaning the message content
 #[command]
 async fn torrent(ctx: &Context, msg: &Message) -> CommandResult {
-    /// This function retrieves the message sent by the user, cleans it
-    /// according to the number of characters in the command, creates a query,
-    /// and then proceeds to retrieve the torrent data from the RSS Feed, and displays
-    /// it in the form of an embed message in Discord.
-    // Retrieving and cleaning the message content
     let mut s = String::from(&msg.content);
     let search = s.split_off(10);
 
