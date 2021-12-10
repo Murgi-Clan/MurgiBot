@@ -19,6 +19,48 @@ fn get_rand(u: &i32, v: &i32) -> i32 {
 }
 
 #[command]
+async fn random(ctx: &Context, msg: &Message) -> CommandResult {
+    // Add parameters
+    // Below given is probably an extremely inefficient 
+    // solution to get integer arguments from a string, please forgive me.
+    let mut s = String::from(&msg.content);
+    s = s.split_off(9);
+    let args = s.split_whitespace().collect::<Vec<_>>();
+
+    let val0 = args[0].parse::<i32>().unwrap();
+    let val1 = args[1].parse::<i32>().unwrap();
+
+    let res = format!("{}", get_rand(&val0, &val1));
+
+    let msg = msg
+        .channel_id
+        .send_message(&ctx.http, |m| {
+            m.content("Respect to the Murgi.");
+            m.embed(|e| {
+                e.title("So, you've decided to take things into your hands.");
+                e.description("As a Murgi takes up the mantle, the battlefield excites.");
+                e.field("All that you have is a dice in your pocket.", res, false);
+                e.footer(|f| {
+                    f.text("Dice Rollers, Randoms and Murgis.");
+                    f
+                });
+
+                e.timestamp(chrono::Utc::now());
+                e
+            });
+            m
+        })
+    .await;
+
+    // Error Handling for the developer
+    if let Err(why) = msg {
+        println!("Error sending message: {:?}", why);
+    }
+
+    Ok(())
+}
+
+#[command]
 async fn d4(ctx: &Context, msg: &Message) -> CommandResult {
     let res = format!("{}", get_rand(&1, &4));
 
