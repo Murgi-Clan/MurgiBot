@@ -8,11 +8,11 @@ use serenity::{
 };
 use rand::Rng;
 
-fn get_rand(v: &i32) -> i32 {
+fn get_rand(u: &i32, v: &i32) -> i32 {
     // Simple function to get the random number
     // created as the Thread interfered with the macro
     let mut rng = rand::thread_rng();
-    let result = rng.gen_range(1..*v);
+    let result = rng.gen_range(*u..*v);
 
     // Returning the randomized result
     return result;
@@ -20,7 +20,7 @@ fn get_rand(v: &i32) -> i32 {
 
 #[command]
 async fn d4(ctx: &Context, msg: &Message) -> CommandResult {
-    let res = format!("{}", get_rand(&4));
+    let res = format!("{}", get_rand(&1, &4));
 
     // Creates an embed message
     let msg = msg
@@ -53,7 +53,7 @@ async fn d4(ctx: &Context, msg: &Message) -> CommandResult {
 
 #[command]
 async fn d6(ctx: &Context, msg: &Message) -> CommandResult {
-    let res = format!("{}", get_rand(&6));
+    let res = format!("{}", get_rand(&1, &6));
 
     // Creates an embed message
     let msg = msg
@@ -62,8 +62,8 @@ async fn d6(ctx: &Context, msg: &Message) -> CommandResult {
             m.content("You hear some clucks nearby.");
             m.embed(|e| {
                 e.title("Somewhere, somehow, a chicken rolled a d6.");
-                e.description("So, now, you face the consequences of this roll.");
-                e.field("A dice falls from the sky, as you pray to the Murgi Lords.", res, false);
+                e.description("You hear screeches, and oaths of glory.");
+                e.field("A dice makes it's way across the battlefield, as you struggle to open your eyes.", res, false);
                 e.footer(|f| {
                     f.text("Dice Rollers, Randoms and Murgis.");
                     f
@@ -86,7 +86,7 @@ async fn d6(ctx: &Context, msg: &Message) -> CommandResult {
 
 #[command]
 async fn d8(ctx: &Context, msg: &Message) -> CommandResult {
-    let res = format!("{}", get_rand(&8));
+    let res = format!("{}", get_rand(&1, &8));
 
     // Creates an embed message
     let msg = msg
@@ -95,8 +95,8 @@ async fn d8(ctx: &Context, msg: &Message) -> CommandResult {
             m.content("You hear some clucks nearby.");
             m.embed(|e| {
                 e.title("Somewhere, somehow, a chicken rolled a d8.");
-                e.description("So, now, you face the consequences of this roll.");
-                e.field("A dice falls from the sky, as you pray to the Murgi Lords.", res, false);
+                e.description("Stars quake the earth, as they strike down upon humanity.");
+                e.field("What seemed to be a shooting star, was in fact a dice.", res, false);
                 e.footer(|f| {
                     f.text("Dice Rollers, Randoms and Murgis.");
                     f
@@ -119,7 +119,7 @@ async fn d8(ctx: &Context, msg: &Message) -> CommandResult {
 
 #[command]
 async fn d10(ctx: &Context, msg: &Message) -> CommandResult {
-    let res = format!("{}", get_rand(&10));
+    let res = format!("{}", get_rand(&1, &10));
 
     // Creates an embed message
     let msg = msg
@@ -128,8 +128,8 @@ async fn d10(ctx: &Context, msg: &Message) -> CommandResult {
             m.content("You hear some clucks nearby.");
             m.embed(|e| {
                 e.title("Somewhere, somehow, a chicken rolled a d10.");
-                e.description("So, now, you face the consequences of this roll.");
-                e.field("A dice falls from the sky, as you pray to the Murgi Lords.", res, false);
+                e.description("The world scars me, as I lose my feathers.");
+                e.field("A feather blown away by the wind, reveals underneath a dice.", res, false);
                 e.footer(|f| {
                     f.text("Dice Rollers, Randoms and Murgis.");
                     f
@@ -152,7 +152,7 @@ async fn d10(ctx: &Context, msg: &Message) -> CommandResult {
 
 #[command]
 async fn d12(ctx: &Context, msg: &Message) -> CommandResult {
-    let res = format!("{}", get_rand(&12));
+    let res = format!("{}", get_rand(&1, &12));
 
     // Creates an embed message
     let msg = msg
@@ -161,8 +161,8 @@ async fn d12(ctx: &Context, msg: &Message) -> CommandResult {
             m.content("You hear some clucks nearby.");
             m.embed(|e| {
                 e.title("Somewhere, somehow, a chicken rolled a d12.");
-                e.description("So, now, you face the consequences of this roll.");
-                e.field("A dice falls from the sky, as you pray to the Murgi Lords.", res, false);
+                e.description("Phoenixes fall, as the world seems to turn inward.");
+                e.field("The light vanishes, but, you manage to find an object on the ground. It's a dice.", res, false);
                 e.footer(|f| {
                     f.text("Dice Rollers, Randoms and Murgis.");
                     f
@@ -185,7 +185,7 @@ async fn d12(ctx: &Context, msg: &Message) -> CommandResult {
 
 #[command]
 async fn d20(ctx: &Context, msg: &Message) -> CommandResult {
-    let res = format!("{}", get_rand(&20));
+    let res = format!("{}", get_rand(&1, &20));
 
     // Creates an embed message
     let msg = msg
@@ -194,8 +194,8 @@ async fn d20(ctx: &Context, msg: &Message) -> CommandResult {
             m.content("You hear some clucks nearby.");
             m.embed(|e| {
                 e.title("Somewhere, somehow, a chicken rolled a d20.");
-                e.description("So, now, you face the consequences of this roll.");
-                e.field("A dice falls from the sky, as you pray to the Murgi Lords.", res, false);
+                e.description("Embers resonate, as the final phoenix rests.");
+                e.field("Four chickens rise to the weight of the world, each holding a dice of their own.", res, false);
                 e.footer(|f| {
                     f.text("Dice Rollers, Randoms and Murgis.");
                     f
