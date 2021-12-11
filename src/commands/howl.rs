@@ -17,12 +17,9 @@
  */
 
 use serenity::{
-    model::{channel::Message},
-    client::{Context},
-    framework::standard::{
-        macros::command,
-        CommandResult
-    }
+    client::Context,
+    framework::standard::{macros::command, CommandResult},
+    model::channel::Message,
 };
 
 #[command]

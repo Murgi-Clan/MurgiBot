@@ -16,30 +16,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>
  */
 
-use serenity::{
-    model::{channel::Message},
-    client::{Context},
-    framework::standard::{
-        macros::command,
-        CommandResult
-    }
-};
 use rand::Rng;
+use serenity::{
+    client::Context,
+    framework::standard::{macros::command, CommandResult},
+    model::channel::Message,
+};
 
 fn get_rand(u: &i32, v: &i32) -> i32 {
     // Simple function to get the random number
     // created as the Thread interfered with the macro
     let mut rng = rand::thread_rng();
-    let result = rng.gen_range(*u..*v);
 
     // Returning the randomized result
-    return result;
+    rng.gen_range(*u..*v)
 }
 
 #[command]
 async fn random(ctx: &Context, msg: &Message) -> CommandResult {
     // Add parameters
-    // Below given is probably an extremely inefficient 
+    // Below given is probably an extremely inefficient
     // solution to get integer arguments from a string, please forgive me.
     let mut s = String::from(&msg.content);
     s = s.split_off(9);
@@ -68,7 +64,7 @@ async fn random(ctx: &Context, msg: &Message) -> CommandResult {
             });
             m
         })
-    .await;
+        .await;
 
     // Error Handling for the developer
     if let Err(why) = msg {
@@ -90,7 +86,11 @@ async fn d4(ctx: &Context, msg: &Message) -> CommandResult {
             m.embed(|e| {
                 e.title("Somewhere, somehow, a chicken rolled a d4.");
                 e.description("So, now, you face the consequences of this roll.");
-                e.field("A dice falls from the sky, as you pray to the Murgi Lords.", res, false);
+                e.field(
+                    "A dice falls from the sky, as you pray to the Murgi Lords.",
+                    res,
+                    false,
+                );
                 e.footer(|f| {
                     f.text("Dice Rollers, Randoms and Murgis.");
                     f
@@ -101,7 +101,7 @@ async fn d4(ctx: &Context, msg: &Message) -> CommandResult {
             });
             m
         })
-    .await;
+        .await;
 
     // Error Handling for the developer
     if let Err(why) = msg {
@@ -156,7 +156,11 @@ async fn d8(ctx: &Context, msg: &Message) -> CommandResult {
             m.embed(|e| {
                 e.title("Somewhere, somehow, a chicken rolled a d8.");
                 e.description("Stars quake the earth, as they strike down upon humanity.");
-                e.field("What seemed to be a shooting star, was in fact a dice.", res, false);
+                e.field(
+                    "What seemed to be a shooting star, was in fact a dice.",
+                    res,
+                    false,
+                );
                 e.footer(|f| {
                     f.text("Dice Rollers, Randoms and Murgis.");
                     f
@@ -167,7 +171,7 @@ async fn d8(ctx: &Context, msg: &Message) -> CommandResult {
             });
             m
         })
-    .await;
+        .await;
 
     // Error Handling for the developer
     if let Err(why) = msg {
@@ -189,7 +193,11 @@ async fn d10(ctx: &Context, msg: &Message) -> CommandResult {
             m.embed(|e| {
                 e.title("Somewhere, somehow, a chicken rolled a d10.");
                 e.description("The world scars me, as I lose my feathers.");
-                e.field("A feather blown away by the wind, reveals underneath a dice.", res, false);
+                e.field(
+                    "A feather blown away by the wind, reveals underneath a dice.",
+                    res,
+                    false,
+                );
                 e.footer(|f| {
                     f.text("Dice Rollers, Randoms and Murgis.");
                     f
@@ -200,7 +208,7 @@ async fn d10(ctx: &Context, msg: &Message) -> CommandResult {
             });
             m
         })
-    .await;
+        .await;
 
     // Error Handling for the developer
     if let Err(why) = msg {

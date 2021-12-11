@@ -18,23 +18,18 @@
 
 mod commands;
 
-use commands::{howl::*, torrent::*, dice::*, help::*};
+use commands::{dice::*, help::*, howl::*, torrent::*};
 
 use serenity::{
     async_trait,
+    client::{Client, Context, EventHandler},
+    framework::standard::{macros::group, StandardFramework},
     model::{channel::Message, gateway::Ready},
     utils::MessageBuilder,
-    client::{Client, Context, EventHandler},
-    framework::standard::{
-        StandardFramework,
-        macros::{
-            group
-        }
-    }
 };
 
-use std::env;
 use regex::Regex;
+use std::env;
 
 struct Handler;
 
@@ -50,30 +45,12 @@ impl EventHandler for Handler {
                 println!("Error getting channel: {:?}", why);
 
                 return;
-            },
-        };
-
-        if msg.content == "m>howl" {
-            // The message builder allows for creating a message by
-            // mentioning users dynamically, pushing "safe" versions of
-            // content (such as bolding normalized content), displaying
-            // emojis, and more.
-            let response = MessageBuilder::new()
-                .push("User ")
-                .push_bold_safe(&msg.author.name)
-                .push(" summoned the Murgi overlord in the ")
-                .mention(&channel)
-                .push(" channel")
-                .build();
-
-            if let Err(why) = msg.channel_id.say(&context.http, &response).await {
-                println!("Error sending message: {:?}", why);
             }
-        }
+        };
 
         unsafe {
             let howl_checker = Regex::new(r"^MURGI CLAN AW[O]*$").unwrap();
-            if howl_checker.is_match(&msg.content) == true {
+            if howl_checker.is_match(&msg.content) {
                 HOWL_COUNTER += 1;
                 if HOWL_COUNTER == 4 {
                     let response = MessageBuilder::new()

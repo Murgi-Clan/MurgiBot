@@ -17,12 +17,9 @@
  */
 
 use serenity::{
-    model::{channel::Message},
-    client::{Context},
-    framework::standard::{
-        macros::command,
-        CommandResult
-    }
+    client::Context,
+    framework::standard::{macros::command, CommandResult},
+    model::channel::Message,
 };
 
 #[command]
@@ -73,7 +70,6 @@ async fn help(ctx: &Context, msg: &Message) -> CommandResult {
         println!("The chicken faced an error: {:?}", why);
     }
 
-
     Ok(())
 }
 
@@ -113,7 +109,6 @@ async fn info(ctx: &Context, msg: &Message) -> CommandResult {
     if let Err(why) = msg {
         println!("The chicken faced an error: {:?}", why);
     }
-
 
     Ok(())
 }
