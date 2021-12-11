@@ -28,7 +28,7 @@ jobs:
       run: |
         docker buildx build \
           --tag datadi/murgi_bot:latest \
-          --platform linux/amd64, linux/arm/v7, linux/arm64 .
+          --platform linux/amd64,linux/arm/v7,linux/arm64 . 
 
     - name: Publish Docker Image
       if: (github.ref == 'refs/heads/main' || github.event_name == 'push') && github.repository == 'dat-adi/murgi_bot'
