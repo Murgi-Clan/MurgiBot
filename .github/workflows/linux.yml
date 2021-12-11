@@ -8,7 +8,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install Buildx
+      id: buildx
+      uses: crazy-max/ghaction-docker-buildx@v1
+      with:
+        version: latest
+
     - name: Login to DockerHub
       if: (github.ref == 'refs/heads/main' || github.event_name == 'push') && github.repository == 'dat-adi/murgi_bot'
       uses: docker/login-action@v1
@@ -17,7 +25,10 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag datadi/murgi_bot:latest
+      run: |
+        docker buildx build \
+          --tag datadi/murgi_bot:latest \
+          --platform linux/amd64, linux/arm/v7, linux/arm64 .
 
     - name: Publish Docker Image
       if: (github.ref == 'refs/heads/main' || github.event_name == 'push') && github.repository == 'dat-adi/murgi_bot'
