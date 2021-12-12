@@ -10,7 +10,7 @@ COPY ./Cargo.toml ./Cargo.toml
 
 # Allocate a Git Hash to the build
 ARG GIT_HASH
-ENV GIT_HASH=$(GIT_HASH:-dev) \
+ENV GIT_HASH=$(GIT_HASH:-dev)
 
 # Build only dependencies to cache them
 RUN cargo build --release && \
