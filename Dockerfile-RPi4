@@ -40,6 +40,6 @@ RUN rm ./target/armv7-unknown-linux-gnueabihf/release/deps/murgi_bot* && \
 FROM debian:buster-slim
 
 # Copy the build artifact from the build stage
-COPY --from-build /murgi/target/armv7-unknown-linux-gnueabihf/release/murgi_bot .
+COPY --from=build /murgi/target/armv7-unknown-linux-gnueabihf/release/murgi_bot .
 
 CMD ["./murgi_bot"]

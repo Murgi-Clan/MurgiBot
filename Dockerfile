@@ -21,7 +21,7 @@ COPY ./src ./src
 
 # Build for release
 RUN rm ./target/release/deps/murgi_bot* && \
-    cargo build --release \
+    cargo build --release
 
 # Final base for running the application
 FROM debian:buster-slim
