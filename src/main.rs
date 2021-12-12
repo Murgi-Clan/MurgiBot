@@ -39,15 +39,6 @@ static mut HOWL_COUNTER: i32 = 0;
 #[async_trait]
 impl EventHandler for Handler {
     async fn message(&self, context: Context, msg: Message) {
-        let channel = match msg.channel_id.to_channel(&context).await {
-            Ok(channel) => channel,
-            Err(why) => {
-                println!("Error getting channel: {:?}", why);
-
-                return;
-            }
-        };
-
         unsafe {
             let howl_checker = Regex::new(r"^MURGI CLAN AW[O]*$").unwrap();
             if howl_checker.is_match(&msg.content) {
@@ -73,7 +64,7 @@ impl EventHandler for Handler {
 }
 
 #[group]
-#[commands(howl, torrent, random, d4, d6, d8, d10, d12, d20, help, info)]
+#[commands(howl, torrent, random, d4, d6, d8, d10, d12, d20, hello, help, info)]
 struct General;
 
 #[tokio::main]

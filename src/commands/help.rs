@@ -23,6 +23,40 @@ use serenity::{
 };
 
 #[command]
+async fn hello(ctx: &Context, msg: &Message) -> CommandResult {
+    let msg = msg
+        .channel_id
+        .send_message(&ctx.http, |m| {
+            m.embed(|e| {
+                e.title("MURGI CLAN AWOOOOOOOOOOOOOOOOOO");
+                e.description("Phoenixes rest, and the world is ablaze, with the will of the wisps parting the way.");
+                e.field("Murgi!", "The last living phoenix, here to pass down my wisdom from the Murgi Overlord.\nChoose an option to find out more about what Murgis can do!", false);
+                e.url("https://youtu.be/AIXkJecFxeA");
+                e.fields(vec![
+                         ("m>help", "A simple message on how to work with the Murgi Bot.", true),
+                         ("m>info", "About the Murgi Bot.", true),
+                ]);
+                e.footer(|f| {
+                    f.text("MURGI Ltd.");
+                    f
+                });
+
+                e.timestamp(chrono::Utc::now());
+                e
+            });
+            m
+        })
+    .await;
+
+    // Error Handling for the developer
+    if let Err(why) = msg {
+        println!("The chicken faced an error: {:?}", why);
+    }
+
+    Ok(())
+}
+
+#[command]
 async fn help(ctx: &Context, msg: &Message) -> CommandResult {
     let msg = msg
         .channel_id
