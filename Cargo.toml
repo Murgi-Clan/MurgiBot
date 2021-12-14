@@ -8,7 +8,6 @@ description = "A Jackett-wearing Murgi. The Discord Bot that gets you howls, DnD
 documentation = "https://doc.rs/murgi_bot"
 readme = "README.md"
 repository = "https://github.com/dat-adi/MurgiBot/"
-license = "GPL-3.0-or-later"
 license-file = "LICENSE"
 keywords = ["discord", "bot", "torrents", "serenity"]
 categories = ["discord-bot"]
