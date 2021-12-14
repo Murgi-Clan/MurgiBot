@@ -25,7 +25,7 @@ version = "1"
 features = ["full"]
 
 [dependencies.serenity]
-git = "https://github.com/serenity-rs/serenity.git"
+version = "0.10.9"
 features = ["client", "gateway", "standard_framework", "model", "cache", "voice", "rustls_backend"]
 
 [dependencies.chrono]
