@@ -18,7 +18,7 @@
 
 mod commands;
 
-use commands::{dice::*, help::*, howl::*, torrent::*};
+use commands::{dice::*, help::*, howl::*, torrent::*, anime::*};
 
 use serenity::{
     async_trait,
@@ -64,7 +64,7 @@ impl EventHandler for Handler {
 }
 
 #[group]
-#[commands(howl, torrent, random, d4, d6, d8, d10, d12, d20, hello, help, info)]
+#[commands(howl, torrent, random, d4, d6, d8, d10, d12, d20, hello, help, info, anime)]
 struct General;
 
 #[tokio::main]

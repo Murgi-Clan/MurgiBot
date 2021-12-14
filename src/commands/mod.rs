@@ -20,3 +20,4 @@ pub mod dice;
 pub mod help;
 pub mod howl;
 pub mod torrent;
+pub mod anime;

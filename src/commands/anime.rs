@@ -17,8 +17,8 @@
  */
 
 use serenity::{
-    model::{channel::Message},
-    client::{Context},
+    model::channel::Message,
+    client::Context,
     framework::standard::{
         macros::command,
         CommandResult
@@ -26,9 +26,20 @@ use serenity::{
 };
 
 #[command]
-async fn anime(ctx: &Context, msg: &Message) -> CommandResult {
-    let mut s = String::from(&msg.content);
-    let search = s.split_off(10);
+async fn anime(_ctx: &Context, msg: &Message) -> CommandResult {
+    let mut s: String = String::from(&msg.content);
+    let search: String = s.split_off(8).to_owned();
+	let mut url_search: String = "https://www5.gogoanime.pro/search?keyword=".to_string();
+
+    url_search.push_str(&search);
+    println!("{}", url_search);
+
+    let body = reqwest::get(url_search)
+        .await?
+        .text()
+        .await?;
+
+    println!("body = {:#?}", body);
 
     Ok(())
 }
