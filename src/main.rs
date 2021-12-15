@@ -18,7 +18,7 @@
 
 mod commands;
 
-use commands::{dice::*, help::*, howl::*, torrent::*, anime::*};
+use commands::{dice::*, help::*, howl::*, torrent::*, cluck::*};
 
 use serenity::{
     async_trait,
@@ -27,6 +27,8 @@ use serenity::{
     model::{channel::Message, gateway::Ready},
     utils::MessageBuilder,
 };
+
+use songbird::SerenityInit;
 
 use regex::Regex;
 use std::env;
@@ -64,7 +66,7 @@ impl EventHandler for Handler {
 }
 
 #[group]
-#[commands(howl, torrent, random, d4, d6, d8, d10, d12, d20, hello, help, info, anime)]
+#[commands(howl, torrent, random, d4, d6, d8, d10, d12, d20, hello, help, info, play)]
 struct General;
 
 #[tokio::main]
@@ -83,6 +85,7 @@ async fn main() {
     let mut client = Client::builder(token)
         .event_handler(Handler)
         .framework(framework)
+        .register_songbird()
         .await
         .expect("Error creating client");
 
