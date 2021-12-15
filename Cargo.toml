@@ -5,12 +5,11 @@ authors = ["Datta Adithya <dat.adithya@gmail.com>"]
 edition = "2021"
 rust-version = "1.56.0"
 description = "A Jackett-wearing Murgi. The Discord Bot that gets you howls, DnD dice, and torrents."
-documentation = "https://doc.rs/murgi_bot"
 readme = "README.md"
 repository = "https://github.com/dat-adi/MurgiBot/"
 license-file = "LICENSE"
 keywords = ["discord", "bot", "torrents", "serenity"]
-categories = ["discord-bot"]
+categories = ["web-programming::websocket"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
