@@ -23,6 +23,7 @@ use serenity::{
     framework::standard::{macros::command, CommandResult},
     model::channel::Message,
 };
+use chrono::prelude::*;
 
 use rss::{Channel, Item};
 
@@ -71,7 +72,7 @@ async fn torrent(ctx: &Context, msg: &Message) -> CommandResult {
                     f
                 });
 
-                e.timestamp(chrono::Utc::now());
+                e.timestamp(DateTime::to_rfc3339(&Utc::now()));
                 e
             });
             m

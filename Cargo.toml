@@ -38,6 +38,6 @@ version = "0.10.9"
 features = ["client", "gateway", "standard_framework", "model", "cache", "voice", "rustls_backend"]
 
 [dependencies.chrono]
-version = "0.4.10"
+version = "0.4.19"
 default-features = false
 features = ["clock"]

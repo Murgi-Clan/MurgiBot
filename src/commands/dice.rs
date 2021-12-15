@@ -22,6 +22,7 @@ use serenity::{
     framework::standard::{macros::command, CommandResult},
     model::channel::Message,
 };
+use chrono::prelude::*;
 
 fn get_rand(u: &i32, v: &i32) -> i32 {
     // Simple function to get the random number
@@ -59,7 +60,7 @@ async fn random(ctx: &Context, msg: &Message) -> CommandResult {
                     f
                 });
 
-                e.timestamp(chrono::Utc::now());
+                e.timestamp(DateTime::to_rfc3339(&Utc::now()));
                 e
             });
             m
@@ -96,7 +97,7 @@ async fn d4(ctx: &Context, msg: &Message) -> CommandResult {
                     f
                 });
 
-                e.timestamp(chrono::Utc::now());
+                e.timestamp(DateTime::to_rfc3339(&Utc::now()));
                 e
             });
             m
@@ -129,7 +130,7 @@ async fn d6(ctx: &Context, msg: &Message) -> CommandResult {
                     f
                 });
 
-                e.timestamp(chrono::Utc::now());
+                e.timestamp(DateTime::to_rfc3339(&Utc::now()));
                 e
             });
             m
@@ -166,7 +167,7 @@ async fn d8(ctx: &Context, msg: &Message) -> CommandResult {
                     f
                 });
 
-                e.timestamp(chrono::Utc::now());
+                e.timestamp(DateTime::to_rfc3339(&Utc::now()));
                 e
             });
             m
@@ -203,7 +204,7 @@ async fn d10(ctx: &Context, msg: &Message) -> CommandResult {
                     f
                 });
 
-                e.timestamp(chrono::Utc::now());
+                e.timestamp(DateTime::to_rfc3339(&Utc::now()));
                 e
             });
             m
@@ -236,7 +237,7 @@ async fn d12(ctx: &Context, msg: &Message) -> CommandResult {
                     f
                 });
 
-                e.timestamp(chrono::Utc::now());
+                e.timestamp(DateTime::to_rfc3339(&Utc::now()));
                 e
             });
             m
@@ -269,7 +270,7 @@ async fn d20(ctx: &Context, msg: &Message) -> CommandResult {
                     f
                 });
 
-                e.timestamp(chrono::Utc::now());
+                e.timestamp(DateTime::to_rfc3339(&Utc::now()));
                 e
             });
             m
