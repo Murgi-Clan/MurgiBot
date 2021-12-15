@@ -22,6 +22,8 @@ use serenity::{
     model::channel::Message,
 };
 
+use chrono::prelude::*;
+
 #[command]
 async fn hello(ctx: &Context, msg: &Message) -> CommandResult {
     let msg = msg
@@ -41,7 +43,7 @@ async fn hello(ctx: &Context, msg: &Message) -> CommandResult {
                     f
                 });
 
-                e.timestamp(chrono::Utc::now());
+                e.timestamp(DateTime::to_rfc3339(&Utc::now()));
                 e
             });
             m
@@ -92,7 +94,7 @@ async fn help(ctx: &Context, msg: &Message) -> CommandResult {
                     f
                 });
 
-                e.timestamp(chrono::Utc::now());
+                e.timestamp(DateTime::to_rfc3339(&Utc::now()));
                 e
             });
             m
@@ -132,7 +134,7 @@ async fn info(ctx: &Context, msg: &Message) -> CommandResult {
                     f
                 });
 
-                e.timestamp(chrono::Utc::now());
+                e.timestamp(DateTime::to_rfc3339(&Utc::now()));
                 e
             });
             m
