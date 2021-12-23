@@ -18,7 +18,7 @@
 
 mod commands;
 
-use commands::{dice::*, help::*, howl::*, torrent::*, cluck::*};
+use commands::{dice::*, help::*, howl::*, torrent::*};
 
 use serenity::{
     async_trait,

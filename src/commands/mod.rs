@@ -21,4 +21,3 @@ pub mod help;
 pub mod howl;
 pub mod torrent;
 pub mod anime;
-pub mod cluck;
