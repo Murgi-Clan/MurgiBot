@@ -16,8 +16,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>
  */
 
-pub mod dice;
-pub mod dict;
-pub mod help;
-pub mod howl;
-pub mod torrent;
+use std::env;
+
+use serenity::{
+    client::Context,
+    framework::standard::{macros::command, CommandResult},
+    model::channel::Message,
+};
+use chrono::prelude::*;
+
+use rss::{Channel, Item};
+
+#[command]
+async fn dict(ctx: &Context, msg: &Message) -> CommandResult {
+    let mut search_word = String::from(&msg.content);
+    search_word = search_word.split_off(7);
+
+    let api_key = env::var("MERRIAM_API_KEY").expect("Expected an API key");
+    let query: String = format!("https://dictionaryapi.com/api/v3/references/collegiate/json/{}?key={}", &search_word, &api_key);
+    println!("{:#?}", &query);
+
+    Ok(())
+}
