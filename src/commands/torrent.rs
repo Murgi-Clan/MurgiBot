@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>
  */
-
 use std::env;
 
 use serenity::{
@@ -23,9 +22,32 @@ use serenity::{
     framework::standard::{macros::command, CommandResult},
     model::channel::Message,
 };
-use chrono::prelude::*;
+use serde::{Serialize, Deserialize};
+use serde_this_or_that::as_i64;
+use chrono::prelude::Utc;
+use chrono::DateTime;
 
-use rss::{Channel, Item};
+// Struct to represent the structure of each torrent present
+// in the Response
+#[derive(Serialize, Deserialize, Debug)]
+struct Torrent {
+    url: String,
+    title: String,
+    #[serde(deserialize_with = "as_i64")]
+    seed: i64,
+    magnetlink: String,
+    filesize: f64,
+    category: String
+}
+
+// Structure of the Response gathered by the torrenting 
+// service which contacts the Searx instance
+#[derive(Serialize, Deserialize, Debug)]
+struct Response {
+    query: String,
+    number_of_results: f64,
+    results: Vec<Torrent>
+}
 
 /// This function retrieves the message sent by the user, cleans it
 /// with respect to the number of characters in the command, creates a query,
@@ -36,18 +58,29 @@ use rss::{Channel, Item};
 async fn torrent(ctx: &Context, msg: &Message) -> CommandResult {
     let mut s = String::from(&msg.content);
     let search = s.split_off(10);
+    let client = reqwest::Client::new();
 
-    // Creating the query to be sent to Jackett
-    let query = env::var("JACKETT_RSS_FEED").expect("Expected an RSS Feed Link") + &search;
-    let content = reqwest::get(&query).await?.bytes().await?;
+    // Retrieving torrents from searx
+    // Since searx works a bit differently, and I need to post data rather than get it,
+    // the requests have to work a bit differently as well.
+    let params = [("q", "!tpb ".to_string() + &search), ("format", "json".to_string())];
+    let query: String = env::var("SEARX_INSTANCE").expect("Expected a Searx Instance Link") + "/search";
+    let content = client.post(query)
+        .form(&params)
+        .header("Content-Type", "application/x-www-form-urlencoded")
+        .send()
+        .await?
+        .text()
+        .await?;
 
-    // Creates a vector of items, where each item has information of one torrent.
-    let channel: Vec<Item> = Channel::read_from(&content[..])?.items().to_vec();
+    // Transmutes the data into JSON through serde
+    let parsed: Response = serde_json::from_str(&content).unwrap();
 
+    // TODO Filter by seeds
     // Takes the first 5 responses and pushes them into the Vector.
     let mut torrs = vec![];
-    for trt in channel.iter().take(5) {
-        torrs.push((trt.title().unwrap(), trt.link().unwrap(), true));
+    for trt in parsed.results.iter().take(5) {
+        torrs.push((&trt.title, &trt.magnetlink, true));
     }
 
     // Creates an embed message

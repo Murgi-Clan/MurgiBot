@@ -28,6 +28,8 @@ use serenity::{
     utils::MessageBuilder,
 };
 
+use songbird::SerenityInit;
+
 use regex::Regex;
 use std::env;
 
@@ -83,6 +85,7 @@ async fn main() {
     let mut client = Client::builder(token)
         .event_handler(Handler)
         .framework(framework)
+        .register_songbird()
         .await
         .expect("Error creating client");
 
