@@ -27,6 +27,8 @@ use serde_this_or_that::as_i64;
 use chrono::prelude::Utc;
 use chrono::DateTime;
 
+// Struct to represent the structure of each torrent present
+// in the Response
 #[derive(Serialize, Deserialize, Debug)]
 struct Torrent {
     url: String,
@@ -38,6 +40,8 @@ struct Torrent {
     category: String
 }
 
+// Structure of the Response gathered by the torrenting 
+// service which contacts the Searx instance
 #[derive(Serialize, Deserialize, Debug)]
 struct Response {
     query: String,
@@ -69,9 +73,10 @@ async fn torrent(ctx: &Context, msg: &Message) -> CommandResult {
         .text()
         .await?;
 
+    // Transmutes the data into JSON through serde
     let parsed: Response = serde_json::from_str(&content).unwrap();
-    // TODO Filter by seeds
 
+    // TODO Filter by seeds
     // Takes the first 5 responses and pushes them into the Vector.
     let mut torrs = vec![];
     for trt in parsed.results.iter().take(5) {
