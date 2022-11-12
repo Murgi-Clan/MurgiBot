@@ -24,7 +24,8 @@ use serenity::{
 };
 use serde::{Serialize, Deserialize};
 use serde_this_or_that::as_i64;
-//use chrono::prelude::Utc;
+use chrono::prelude::Utc;
+use chrono::DateTime;
 
 #[derive(Serialize, Deserialize, Debug)]
 struct Torrent {
@@ -55,10 +56,6 @@ async fn torrent(ctx: &Context, msg: &Message) -> CommandResult {
     let search = s.split_off(10);
     let client = reqwest::Client::new();
 
-    // Creating the query to be sent to Jackett
-    // let query = env::var("JACKETT_RSS_FEED").expect("Expected an RSS Feed Link") + &search;
-    // let content = reqwest::get(&query).await?.bytes().await?;
-    
     // Retrieving torrents from searx
     // Since searx works a bit differently, and I need to post data rather than get it,
     // the requests have to work a bit differently as well.
@@ -73,20 +70,12 @@ async fn torrent(ctx: &Context, msg: &Message) -> CommandResult {
         .await?;
 
     let parsed: Response = serde_json::from_str(&content).unwrap();
-    for torrent in parsed.results {
-        print!("Name: {}\n", torrent.title);
-        print!("Magnet Link: {}\n", torrent.magnetlink);
-        print!("Seeders: {}\n---\n", torrent.seed);
-    }
-
-    /*
-    // Creates a vector of items, where each item has information of one torrent.
-    let channel: Vec<Item> = Channel::read_from(&content[..])?.items().to_vec();
+    // TODO Filter by seeds
 
     // Takes the first 5 responses and pushes them into the Vector.
     let mut torrs = vec![];
-    for trt in channel.iter().take(5) {
-        torrs.push((trt.title().unwrap(), trt.link().unwrap(), true));
+    for trt in parsed.results.iter().take(5) {
+        torrs.push((&trt.title, &trt.magnetlink, true));
     }
 
     // Creates an embed message
@@ -122,7 +111,6 @@ async fn torrent(ctx: &Context, msg: &Message) -> CommandResult {
     if let Err(why) = msg {
         println!("The chicken faced an error: {:?}", why);
     }
-    */
 
     Ok(())
 }
