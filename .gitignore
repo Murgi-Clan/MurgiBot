@@ -8,6 +8,8 @@ docker-compose.yml
 
 
 # Added by cargo
-
 /target
 .env
+
+# default toml
+config/default.toml
