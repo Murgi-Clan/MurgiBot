@@ -64,7 +64,7 @@ async fn torrent(ctx: &Context, msg: &Message) -> CommandResult {
     // Since searx works a bit differently, and I need to post data rather than get it,
     // the requests have to work a bit differently as well.
     let params = [("q", "!tpb ".to_string() + &search), ("format", "json".to_string())];
-    let query: String = env::var("SEARX_INSTANCE").expect("Expected a Searx Instance Link") + "/search";
+    let query: String = env::var("searx_instance").expect("Expected a Searx Instance Link") + "/search";
     let content = client.post(query)
         .form(&params)
         .header("Content-Type", "application/x-www-form-urlencoded")

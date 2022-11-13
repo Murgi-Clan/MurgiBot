@@ -17,6 +17,7 @@
  */
 
 mod commands;
+mod settings;
 
 use commands::{dice::*, help::*, howl::*, torrent::*};
 
@@ -28,8 +29,10 @@ use serenity::{
     utils::MessageBuilder,
 };
 
-use songbird::SerenityInit;
+pub use settings::Settings;
 
+use songbird::SerenityInit;
+use lazy_static::lazy_static;
 use regex::Regex;
 use std::env;
 
@@ -65,6 +68,10 @@ impl EventHandler for Handler {
     }
 }
 
+lazy_static! {
+    static ref CONFIG: settings::Settings = settings::Settings::new().expect("Config can be loaded");
+}
+
 #[group]
 #[commands(howl, torrent, random, d4, d6, d8, d10, d12, d20, hello, help, info)]
 struct General;
@@ -80,8 +87,12 @@ async fn main() {
         .configure(|c| c.prefix("m>")) // set the bot's prefix to "m>"
         .group(&GENERAL_GROUP);
 
+    // Setting up settings
+    let settings = Settings::new().unwrap();
+
     // Login with a bot token from the environment
-    let token = env::var("DISCORD_TOKEN").expect("Expected a token in the environment");
+    // let token = env::var("DISCORD_TOKEN").expect("Expected a token in the environment");
+    let token = settings.discord_token;
     let mut client = Client::builder(token)
         .event_handler(Handler)
         .framework(framework)
