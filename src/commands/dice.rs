@@ -34,6 +34,53 @@ fn get_rand(u: &i32, v: &i32) -> i32 {
 }
 
 #[command]
+async fn roll(ctx: &Context, msg: &Message) -> CommandResult {
+    // Parsing the input
+    let s = String::from(&msg.content).split_off(6);
+    let args = s.split_whitespace().collect::<Vec<_>>();
+
+    // Setting up the rolls
+    let rolls = args[0].parse::<i32>().unwrap();
+    let die_faces = args[1].parse::<i32>().unwrap();
+
+    let mut res: Vec<i32> = Vec::new();
+
+    // Adding the rolls to a vector.
+    for _ in 0..rolls {
+        res.push(get_rand(&1, &die_faces));
+    }
+    let result = format!("{:?}", &res);
+
+    // Creates an embed message
+    let msg = msg
+        .channel_id
+        .send_message(&ctx.http, |m| {
+            m.content("Acanthyllis trembles.");
+            m.embed(|e| {
+                e.title("Somewhere, somehow, a chicken rolled a d20.");
+                e.description("The City of Aethon responds to your call.");
+                e.field("The shining beam of light dissipates, to reveal a few dice.", &result, false);
+                e.footer(|f| {
+                    f.text("Dice Rollers, Randoms and Murgis.");
+                    f
+                });
+
+                e.timestamp(DateTime::to_rfc3339(&Utc::now()));
+                e
+            });
+            m
+        })
+    .await;
+
+    // Error Handling for the developer
+    if let Err(why) = msg {
+        println!("Error sending message: {:?}", why);
+    }
+
+    Ok(())
+}
+
+#[command]
 async fn random(ctx: &Context, msg: &Message) -> CommandResult {
     // Add parameters
     // Below given is probably an extremely inefficient

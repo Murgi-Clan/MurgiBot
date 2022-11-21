@@ -80,6 +80,7 @@ async fn help(ctx: &Context, msg: &Message) -> CommandResult {
                 ]);
                 e.fields(vec![
                          // Might need to implement random numbers without arguments and with one argument.
+                         ("m>roll", "Rolls for a number of set dice.", true),
                          ("m>random", "Rolls for a random number between two given numbers.", true), 
                          ("m>d4", "Rolls a d4 dice", true),
                          ("m>d6", "Rolls a d6 dice", true),

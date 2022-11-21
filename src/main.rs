@@ -17,7 +17,6 @@
  */
 
 mod commands;
-mod settings;
 
 use commands::{dice::*, help::*, howl::*, torrent::*};
 
@@ -29,8 +28,6 @@ use serenity::{
     utils::MessageBuilder,
 };
 
-use songbird::SerenityInit;
-use lazy_static::lazy_static;
 use regex::Regex;
 use std::env;
 
@@ -66,12 +63,8 @@ impl EventHandler for Handler {
     }
 }
 
-lazy_static! {
-    static ref CONFIG: settings::Settings = settings::Settings::new().expect("Config can be loaded");
-}
-
 #[group]
-#[commands(howl, torrent, random, d4, d6, d8, d10, d12, d20, hello, help, info)]
+#[commands(howl, torrent, roll, random, d4, d6, d8, d10, d12, d20, hello, help, info)]
 struct General;
 
 #[tokio::main]
@@ -90,7 +83,6 @@ async fn main() {
     let mut client = Client::builder(token)
         .event_handler(Handler)
         .framework(framework)
-        .register_songbird()
         .await
         .expect("Error creating client");
 
