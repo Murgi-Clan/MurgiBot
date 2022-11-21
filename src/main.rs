@@ -29,8 +29,6 @@ use serenity::{
     utils::MessageBuilder,
 };
 
-pub use settings::Settings;
-
 use songbird::SerenityInit;
 use lazy_static::lazy_static;
 use regex::Regex;
@@ -87,12 +85,8 @@ async fn main() {
         .configure(|c| c.prefix("m>")) // set the bot's prefix to "m>"
         .group(&GENERAL_GROUP);
 
-    // Setting up settings
-    let settings = Settings::new().unwrap();
-
     // Login with a bot token from the environment
-    // let token = env::var("DISCORD_TOKEN").expect("Expected a token in the environment");
-    let token = settings.discord_token;
+    let token = env::var("DISCORD_TOKEN").expect("Expected a token in the environment");
     let mut client = Client::builder(token)
         .event_handler(Handler)
         .framework(framework)
